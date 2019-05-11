@@ -1,0 +1,23 @@
+
+plugins {
+    id 'org.jetbrains.intellij' version '0.4.8'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.31'
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+group 'com.yulrizka'
+version '1.0-SNAPSHOT'
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    version 'IC-2019.1'
+}
+patchPluginXml {
+    changeNotes """
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>"""
+}

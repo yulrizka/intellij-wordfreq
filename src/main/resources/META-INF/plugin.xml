@@ -1,0 +1,26 @@
+<idea-plugin>
+    <id>com.yulrizka.word-counter</id>
+    <name>word-counter</name>
+    <vendor email="ahmy@yulrizka.com" url="http://www.yulrizka.com">www.yulrizka.com</vendor>
+
+    <description><![CDATA[
+    Plugin to show word frequency on selected text
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <group id="MyPlugin.SampleMenu" text="Greeting" description="Greeting menu">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action id="Myplugin.Textboxes" class="com.yulrizka.plugin.wordcount.HelloAction" text="Hello" description="Says hello"/>
+        </group>
+    </actions>
+</idea-plugin>
