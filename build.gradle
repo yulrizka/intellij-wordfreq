@@ -9,8 +9,8 @@ repositories {
     mavenCentral()
 }
 
-group 'com.yulrizka'
-version '1.0-SNAPSHOT'
+group 'com.yulrizka.plugin'
+version '0.1.0'
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
@@ -18,6 +18,6 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+      v0.1.0 First Initial version working with brare interface<br>
+      """
 }

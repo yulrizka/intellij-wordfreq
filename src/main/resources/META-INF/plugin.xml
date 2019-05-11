@@ -1,10 +1,10 @@
 <idea-plugin>
-    <id>com.yulrizka.word-counter</id>
-    <name>word-counter</name>
+    <id>com.yulrizka.wordfreq</id>
+    <name>Word Frequency counter</name>
     <vendor email="ahmy@yulrizka.com" url="http://www.yulrizka.com">www.yulrizka.com</vendor>
 
     <description><![CDATA[
-    Plugin to show word frequency on selected text
+    Provides action to count each word frequency on selected text
     ]]></description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
@@ -14,13 +14,12 @@
     -->
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="wordfreqWindow" anchor="right" factoryClass="com.yulrizka.plugin.wordfreq.WordCountAction"/>
+        <toolWindow id="Word Frequency" anchor="right" factoryClass="com.yulrizka.plugin.wordfreq.WordCountAction" order="last" />
     </extensions>
 
     <actions>
-        <group id="MyPlugin.SampleMenu" text="Greeting" description="Greeting menu">
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
-            <action id="Myplugin.Textboxes" class="com.yulrizka.plugin.wordfreq.WordCountAction" text="Word Frequencies" description="Count word frequency"/>
-        </group>
+            <action id="Count Word Frequency" class="com.yulrizka.plugin.wordfreq.WordCountAction" text="Count Word Frequencies" description="Count Word Frequency">
+                <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            </action>
     </actions>
 </idea-plugin>
