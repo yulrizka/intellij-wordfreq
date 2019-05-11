@@ -14,13 +14,13 @@
     -->
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
+        <toolWindow id="wordfreqWindow" anchor="right" factoryClass="com.yulrizka.plugin.wordfreq.WordCountAction"/>
     </extensions>
 
     <actions>
         <group id="MyPlugin.SampleMenu" text="Greeting" description="Greeting menu">
-            <add-to-group group-id="MainMenu" anchor="last"/>
-            <action id="Myplugin.Textboxes" class="com.yulrizka.plugin.wordcount.HelloAction" text="Hello" description="Says hello"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <action id="Myplugin.Textboxes" class="com.yulrizka.plugin.wordfreq.WordCountAction" text="Word Frequencies" description="Count word frequency"/>
         </group>
     </actions>
 </idea-plugin>
