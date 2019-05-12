@@ -30,9 +30,6 @@ class WordCountAction : AnAction("Count Word Frequency"), ToolWindowFactory {
 
 
         if (selectedText != null && project != null) {
-            val wordCounter = WordCounter()
-            val wordCount = wordCounter.wordCount(selectedText)
-
             // setup tool window if not exist
             val toolWindow = ToolWindowManager.getInstance(project).getToolWindow("Word Frequency")
             if (this.wordFreqWindow == null) {
@@ -44,7 +41,18 @@ class WordCountAction : AnAction("Count Word Frequency"), ToolWindowFactory {
                 toolWindow.contentManager.addContent(content)
             }
 
-            this.wordFreqWindow?.setText(wordCount)
+            val wordCounter = WordCounter()
+            val wordGroups = wordCounter.wordCount(selectedText)
+
+
+            // build text representation
+            val s = StringBuilder()
+
+            for ((token, freq) in wordGroups) {
+                s.append("%4d %4d %.2f%% %s\n".format(freq, token.span, token.proportionPct, token.word))
+            }
+
+            this.wordFreqWindow?.setText(s.toString())
             toolWindow.show(null)
 
         }
@@ -55,13 +63,13 @@ class WordCountAction : AnAction("Count Word Frequency"), ToolWindowFactory {
         val project = e.project
         val editor = e.getData(CommonDataKeys.EDITOR)
         //Set visibility only in case of existing project and editor
-        e.presentation.setVisible(project != null && editor != null && editor.selectionModel.hasSelection())
+        e.presentation.isVisible = project != null && editor != null && editor.selectionModel.hasSelection()
     }
 
 }
 
 class WordCounter {
-    fun wordCount(text: String): String {
+    fun wordCount(text: String): List<Pair<Token, Int>> {
         val r = Regex("""\p{Alnum}+""")
         val tokenMap = mutableMapOf<String, Token>()
 
@@ -73,8 +81,7 @@ class WordCounter {
                 val word = it.value
                 val t = tokenMap.getOrPut(word) {
                     val firstIndex = it.groups.first()?.range?.first ?: 0
-                    val t = Token(word, lineNum, firstIndex)
-                    t
+                    Token(word, lineNum, firstIndex)
                 }
                 t.count += 1
                 t.lastLine = lineNum
@@ -84,18 +91,10 @@ class WordCounter {
         val totalLine = lines.count()
         val wordGroups = tokenMap.map {
             it.value.calculateSpan(totalLine)
-            Pair(it, it.value.count)
+            Pair(it.value, it.value.count)
         }.sortedByDescending { it.second }
 
-
-        val s = StringBuilder()
-
-
-        for ((token, freq) in wordGroups) {
-            s.append("%4d %4d %.2f %s\n".format(freq, token.value.span, token.value.proportionPct, token.value.word))
-        }
-
-        return s.toString()
+        return wordGroups
     }
 }
 
@@ -103,7 +102,7 @@ class Token(val word: String, val firstLine: Int, val firstCol: Int) {
     var count = 0
     var lastLine = 0
     var span = 0 // line difference between the first and last occurrence
-    var proportionPct: Float = 0F //
+    var proportionPct: Float = 0F // Percentages of span to total lines
 
     fun calculateSpan(totalLine: Int) {
         span = lastLine - firstLine + 1
