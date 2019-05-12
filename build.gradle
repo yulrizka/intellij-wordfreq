@@ -12,7 +12,7 @@ repositories {
 }
 
 group 'com.yulrizka.plugin'
-version '0.1.0'
+version '0.2.0'
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
