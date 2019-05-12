@@ -24,6 +24,14 @@ class Outer {
         println(sample)
         val wc = WordCounter()
         val output = wc.wordCount(sample)
-        println(output)
+
+        // build text representation
+        val s = StringBuilder()
+
+        for (token in output) {
+            s.append("%4d %4d %.2f%% %s\n".format(token.count, token.span, token.proportionPct, token.word))
+        }
+
+        println(s)
     }
 }

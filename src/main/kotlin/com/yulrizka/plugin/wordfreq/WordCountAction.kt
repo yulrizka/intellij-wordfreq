@@ -44,15 +44,7 @@ class WordCountAction : AnAction("Count Word Frequency"), ToolWindowFactory {
             val wordCounter = WordCounter()
             val wordGroups = wordCounter.wordCount(selectedText)
 
-
-            // build text representation
-            val s = StringBuilder()
-
-            for ((token, freq) in wordGroups) {
-                s.append("%4d %4d %.2f%% %s\n".format(freq, token.span, token.proportionPct, token.word))
-            }
-
-            this.wordFreqWindow?.setText(s.toString())
+            this.wordFreqWindow?.setTable(wordGroups)
             toolWindow.show(null)
 
         }
@@ -69,7 +61,7 @@ class WordCountAction : AnAction("Count Word Frequency"), ToolWindowFactory {
 }
 
 class WordCounter {
-    fun wordCount(text: String): List<Pair<Token, Int>> {
+    fun wordCount(text: String): List<Token> {
         val r = Regex("""\p{Alnum}+""")
         val tokenMap = mutableMapOf<String, Token>()
 
@@ -89,12 +81,10 @@ class WordCounter {
         }
 
         val totalLine = lines.count()
-        val wordGroups = tokenMap.map {
+        return tokenMap.map {
             it.value.calculateSpan(totalLine)
-            Pair(it.value, it.value.count)
-        }.sortedByDescending { it.second }
-
-        return wordGroups
+            it.value
+        }.sortedByDescending { it.count }
     }
 }
 
