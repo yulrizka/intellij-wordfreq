@@ -33,7 +33,7 @@ class WordCountAction : AnAction("Count Word Frequency"), ToolWindowFactory {
             // setup tool window if not exist
             val toolWindow = ToolWindowManager.getInstance(project).getToolWindow("Word Frequency")
             if (this.wordFreqWindow == null) {
-                val win = WordFreqWindow(toolWindow)
+                val win = WordFreqWindow()
                 this.wordFreqWindow = win
 
                 val contentFactory = ContentFactory.SERVICE.getInstance()
@@ -56,46 +56,5 @@ class WordCountAction : AnAction("Count Word Frequency"), ToolWindowFactory {
         val editor = e.getData(CommonDataKeys.EDITOR)
         //Set visibility only in case of existing project and editor
         e.presentation.isVisible = project != null && editor != null && editor.selectionModel.hasSelection()
-    }
-
-}
-
-class WordCounter {
-    fun wordCount(text: String): List<Token> {
-        val r = Regex("""\p{Alnum}+""")
-        val tokenMap = mutableMapOf<String, Token>()
-
-        // parse each line, and for each line parse word as token
-        val lines = text.lines()
-        lines.forEachIndexed { lineNum, str ->
-            val matches = r.findAll(str)
-            matches.forEach {
-                val word = it.value
-                val t = tokenMap.getOrPut(word) {
-                    val firstIndex = it.groups.first()?.range?.first ?: 0
-                    Token(word, lineNum, firstIndex)
-                }
-                t.count += 1
-                t.lastLine = lineNum
-            }
-        }
-
-        val totalLine = lines.count()
-        return tokenMap.map {
-            it.value.calculateSpan(totalLine)
-            it.value
-        }.sortedByDescending { it.count }
-    }
-}
-
-class Token(val word: String, val firstLine: Int, val firstCol: Int) {
-    var count = 0
-    var lastLine = 0
-    var span = 0 // line difference between the first and last occurrence
-    var proportionPct: Float = 0F // Percentages of span to total lines
-
-    fun calculateSpan(totalLine: Int) {
-        span = lastLine - firstLine + 1
-        proportionPct = span / totalLine.toFloat() * 100
     }
 }

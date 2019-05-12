@@ -12,7 +12,7 @@ public class WordFreqWindow {
     private JPanel panel;
     private JTable table;
 
-    public WordFreqWindow(ToolWindow toolWindow) {
+    public WordFreqWindow() {
 
     }
 
