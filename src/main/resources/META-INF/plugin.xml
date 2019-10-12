@@ -1,10 +1,32 @@
 <idea-plugin>
     <id>com.yulrizka.wordfreq</id>
     <name>Word Frequency counter</name>
-    <vendor email="ahmy@yulrizka.com" url="http://www.yulrizka.com">www.yulrizka.com</vendor>
+    <vendor email="ahmy@yulrizka.com" url="https://github.com/yulrizka/intellij-wordfreq">Ahmy yulrizka (yulrizka.com)</vendor>
 
     <description><![CDATA[
-    Provides action to count each word frequency on selected text
+<p>
+Provides action to count, span and percentage of selected range.
+You can use this plugin as a tool to discover which keywords is important in a source code.
+</p><br/>
+
+<p>
+Trigger the count by using <b>right click</b> on the editor pane
+</p><br/>
+
+<p>
+This plugins gives you 3 metrics
+<ul>
+<li><b>count</b>: the frequency of a term</li>
+<li><b>span</b>: number of line between the first and last encounter of the term</li>
+<li><b>proportion</b>: percentage line of the span comparing to the whole selected text</li>
+</ul>
+</p><br>
+
+<p><img src="https://raw.githubusercontent.com/yulrizka/intellij-wordfreq/master/.github/word-freq-small.png" alt="word count plugin" /></p><br/>
+
+<p>Icon made by <a href="https://www.flaticon.com/authors/freepik">freepik</a> from www.flaticon.com</p><br/>
+
+
     ]]></description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
@@ -18,7 +40,7 @@
     </extensions>
 
     <actions>
-            <action id="Count Word Frequency" class="com.yulrizka.plugin.wordfreq.WordCountAction" text="Count Word Frequencies" description="Count Word Frequency">
+            <action id="Count Word Frequency" class="com.yulrizka.plugin.wordfreq.WordCountAction" text="Count Word Frequencies" description="Count word Frequency">
                 <add-to-group group-id="EditorPopupMenu" anchor="last"/>
             </action>
     </actions>
