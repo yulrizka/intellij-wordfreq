@@ -35,6 +35,8 @@ This plugins gives you 3 metrics
     <depends>com.intellij.modules.lang</depends>
     -->
 
+    <depends>com.intellij.modules.platform</depends>
+
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow id="Word Frequency" anchor="right" factoryClass="com.yulrizka.plugin.wordfreq.WordCountAction" order="last" />
     </extensions>

@@ -1,6 +1,5 @@
 package com.yulrizka.plugin.wordfreq;
 
-import com.intellij.openapi.wm.ToolWindow;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;

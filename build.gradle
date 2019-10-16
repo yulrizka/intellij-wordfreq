@@ -16,7 +16,7 @@ version '0.2.0'
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version '2019.2'
+    version '2017.1'
     updateSinceUntilBuild false
 }
 
@@ -25,6 +25,10 @@ patchPluginXml {
       v0.1.0 First Initial version working with bare interface<br>
       """
     sinceBuild "171"
+}
+
+publishPlugin {
+    token intellijPublishToken
 }
 
 test { useJUnitPlatform() }
