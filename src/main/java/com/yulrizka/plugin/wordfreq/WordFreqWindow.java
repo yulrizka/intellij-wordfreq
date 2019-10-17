@@ -29,10 +29,7 @@ public class WordFreqWindow {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 switch (columnIndex) {
-                    case 0:
-                        return String.class;
                     case 1:
-                        return Integer.class;
                     case 2:
                         return Integer.class;
                     case 3:
@@ -57,8 +54,6 @@ public class WordFreqWindow {
                     NumberFormat percentInstance = DecimalFormat.getPercentInstance();
                     percentInstance.setMaximumFractionDigits(2);
                     value = percentInstance.format(pct);
-                } else {
-                    value = null;
                 }
                 setHorizontalAlignment(JLabel.RIGHT);
                 return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
