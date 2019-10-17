@@ -32,19 +32,16 @@ class WordCountAction : AnAction("Count Word Frequency"), ToolWindowFactory {
         if (selectedText != null && project != null) {
             // setup tool window if not exist
             val toolWindow = ToolWindowManager.getInstance(project).getToolWindow("Word Frequency")
-            if (this.wordFreqWindow == null) {
-                val win = WordFreqWindow()
-                this.wordFreqWindow = win
-
-                val contentFactory = ContentFactory.SERVICE.getInstance()
-                val content = contentFactory.createContent(win.content, "", false)
-                toolWindow.contentManager.addContent(content)
-            }
+            toolWindow.contentManager.removeAllContents(true)
+            val win = WordFreqWindow()
+            val contentFactory = ContentFactory.SERVICE.getInstance()
+            val content = contentFactory.createContent(win.content, "", false)
+            toolWindow.contentManager.addContent(content)
 
             val wordCounter = WordCounter()
             val wordGroups = wordCounter.wordCount(selectedText)
 
-            this.wordFreqWindow?.setTable(wordGroups)
+            win.setTable(wordGroups)
             toolWindow.show(null)
 
         }

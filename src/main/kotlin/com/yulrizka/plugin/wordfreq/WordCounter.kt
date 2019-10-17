@@ -46,6 +46,6 @@ class Token(
 
     fun calculateSpan(totalLine: Int) {
         span = lastLine - firstLine + 1
-        proportionPct = span / totalLine.toFloat() * 100
+        proportionPct = span / totalLine.toFloat()
     }
 }

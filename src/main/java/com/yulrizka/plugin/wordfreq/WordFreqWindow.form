@@ -19,7 +19,9 @@
         <children>
           <component id="46f0d" class="javax.swing.JTable" binding="table">
             <constraints/>
-            <properties/>
+            <properties>
+              <autoCreateRowSorter value="true"/>
+            </properties>
           </component>
         </children>
       </scrollpane>
