@@ -14,7 +14,7 @@ class WordCounter {
                 val word = it.value
                 val t = tokenMap.getOrPut(word) {
                     val firstIndex = it.groups.first()?.range?.first ?: 0
-                    val t = Token(word, 0, 0, 0F)
+                    val t = Token(word, 0, 0, 0F, lineNum, it.range.first)
                     t.firstLine = lineNum
                     t.firstCol = firstIndex
 
@@ -37,7 +37,9 @@ class Token(
         val word: String,
         var count: Int,
         var span: Int, // line difference between the first and last occurrence
-        var proportionPct: Float // Percentages of span to total lines
+        var proportionPct: Float, // Percentages of span to total lines
+        var row: Int,
+        var col: Int
 ) {
 
     var firstLine = 0
