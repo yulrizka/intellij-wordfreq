@@ -1,5 +1,6 @@
 package com.yulrizka.plugin.wordfreq;
 
+import com.intellij.openapi.editor.Editor;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.JPanel;
@@ -18,7 +19,7 @@ public class WordFreqWindow {
         return panel;
     }
 
-    public void setTable(@NotNull List<Token> tokens) {
-        new TableManager(table, tokens);
+    public void setTable(@NotNull List<Token> tokens, Editor editor) {
+        new TableManager(table, tokens, editor);
     }
 }

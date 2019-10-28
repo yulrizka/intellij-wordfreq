@@ -4,7 +4,6 @@ import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.PlatformDataKeys
-import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowFactory
@@ -12,8 +11,7 @@ import com.intellij.openapi.wm.ToolWindowManager
 import com.intellij.ui.content.ContentFactory
 
 class WordCountAction : AnAction("Count Word Frequency"), ToolWindowFactory {
-    private val logger = Logger.getInstance("wordFreq")
-    var wordFreqWindow: WordFreqWindow? = null
+    //private val logger = Logger.getInstance("wordFreq")
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
         toolWindow.hide(null)
@@ -41,7 +39,7 @@ class WordCountAction : AnAction("Count Word Frequency"), ToolWindowFactory {
             val wordCounter = WordCounter()
             val wordGroups = wordCounter.wordCount(selectedText)
 
-            win.setTable(wordGroups)
+            win.setTable(wordGroups, editor)
             toolWindow.show(null)
 
         }
