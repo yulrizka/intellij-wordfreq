@@ -21,9 +21,11 @@ class WordCountAction : AnAction("Count Word Frequency"), ToolWindowFactory {
         val project = e.getData(PlatformDataKeys.PROJECT)
 
         val editor = e.getRequiredData(CommonDataKeys.EDITOR)
+        val doc = editor.document
 
         //val document = editor.document
         val selectionModel = editor.selectionModel
+        val startLine = doc.getLineNumber(selectionModel.selectionStart)
         val selectedText = selectionModel.selectedText
 
 
@@ -36,8 +38,9 @@ class WordCountAction : AnAction("Count Word Frequency"), ToolWindowFactory {
             val content = contentFactory.createContent(win.content, "", false)
             toolWindow.contentManager.addContent(content)
 
-            val wordCounter = WordCounter()
-            val wordGroups = wordCounter.wordCount(selectedText)
+            val skipWords = getSkipWords()
+            val wordCounter = WordCounter(skipWords)
+            val wordGroups = wordCounter.wordCount(selectedText, startLine)
 
             win.setTable(wordGroups, editor)
             toolWindow.show(null)
@@ -51,5 +54,11 @@ class WordCountAction : AnAction("Count Word Frequency"), ToolWindowFactory {
         val editor = e.getData(CommonDataKeys.EDITOR)
         //Set visibility only in case of existing project and editor
         e.presentation.isVisible = project != null && editor != null && editor.selectionModel.hasSelection()
+    }
+
+    private fun getSkipWords() : String {
+        val goSkipWords = "break,case,chan,const,continue,default,defer,else,fallthrough,for,func,go,goto,if,import,interface,map,package,range,return,select,struct,switch,type,var,nil"
+
+        return goSkipWords
     }
 }

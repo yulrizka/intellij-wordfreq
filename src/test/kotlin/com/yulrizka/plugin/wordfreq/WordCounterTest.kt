@@ -21,8 +21,8 @@ class Outer {
 }
                 """.trimIndent()
 
-        val wc = WordCounter()
-        val output = wc.wordCount(sample)
+        val wc = WordCounter("")
+        val output = wc.wordCount(sample, 0)
 
         // build text representation
         val s = StringBuilder()

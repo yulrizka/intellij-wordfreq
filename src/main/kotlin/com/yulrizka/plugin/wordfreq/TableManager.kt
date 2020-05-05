@@ -3,7 +3,10 @@ package com.yulrizka.plugin.wordfreq
 import com.intellij.openapi.editor.CaretModel
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.LogicalPosition
+import com.intellij.openapi.editor.SelectionModel
 import java.awt.Component
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
 import java.text.DecimalFormat
 import javax.swing.JLabel
 import javax.swing.JTable
@@ -14,7 +17,7 @@ import javax.swing.table.DefaultTableCellRenderer
 class TableManager(
         private val table: JTable,
         private val tokens: MutableList<Token>,
-        private val editor: Editor) : ListSelectionListener {
+        private val editor: Editor) : ListSelectionListener, MouseAdapter() {
 
     private val dtm: TokenTableModel = TokenTableModel(tokens)
 
@@ -44,13 +47,46 @@ class TableManager(
 
 
         table.selectionModel.addListSelectionListener(this)
+        table.addMouseListener(this)
+
     }
 
     // valueChanged handles when table is clicked
     override fun valueChanged(e: ListSelectionEvent?) {
-        if (e == null || e.valueIsAdjusting) {
-            return
-        }
+//        if (e == null || e.valueIsAdjusting) {
+//            return
+//        }
+//
+//        val selectedRow = table.selectedRow
+//        if (selectedRow < 0) {
+//            return
+//        }
+//        val actualRow: Int = table.convertRowIndexToModel(selectedRow)
+//        val token: Token = this.tokens[actualRow]
+//
+//
+//        val caretModel: CaretModel = this.editor.caretModel
+//
+//        var line: Int = token.row
+//        var column: Int = token.col
+//
+//        // get current line
+//        val caretLine = caretModel.logicalPosition.line
+//        val caretCol = caretModel.logicalPosition.column
+//        if (line == caretLine && column == caretCol) {
+//            // already at the first occurrence, go to last occurrence instead
+//            line = token.lastLine
+//            column = token.lastCol
+//        }
+//
+//        caretModel.moveToLogicalPosition(LogicalPosition(line, column))
+
+        //val selModel: SelectionModel = this.editor.selectionModel
+        //selModel.selectWordAtCaret(true)
+    }
+
+    override fun mouseClicked(e: MouseEvent?) {
+        super.mouseClicked(e)
 
         val selectedRow = table.selectedRow
         if (selectedRow < 0) {
@@ -59,13 +95,21 @@ class TableManager(
         val actualRow: Int = table.convertRowIndexToModel(selectedRow)
         val token: Token = this.tokens[actualRow]
 
-        val caretRow: Int = token.row
-        val caretCol: Int = token.col
 
         val caretModel: CaretModel = this.editor.caretModel
-        caretModel.moveToLogicalPosition(LogicalPosition(caretRow, caretCol))
 
-        val selModel = this.editor.selectionModel
-        selModel.selectWordAtCaret(true)
+        var line: Int = token.row
+        var column: Int = token.col
+
+        // get current line
+        val caretLine = caretModel.logicalPosition.line
+        val caretCol = caretModel.logicalPosition.column
+        if (line == caretLine && column == caretCol) {
+            // already at the first occurrence, go to last occurrence instead
+            line = token.lastLine
+            column = token.lastCol
+        }
+
+        caretModel.moveToLogicalPosition(LogicalPosition(line, column))
     }
 }
