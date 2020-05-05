@@ -28,7 +28,6 @@ class WordCountAction : AnAction("Count Word Frequency"), ToolWindowFactory {
         val startLine = doc.getLineNumber(selectionModel.selectionStart)
         val selectedText = selectionModel.selectedText
 
-
         if (selectedText != null && project != null) {
             // setup tool window if not exist
             val toolWindow = ToolWindowManager.getInstance(project).getToolWindow("Word Frequency")
